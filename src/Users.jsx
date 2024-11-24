@@ -40,7 +40,9 @@ const Users = () => {
             <div className="flex-1">
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="text-xl font-semibold text-neutral-dark">Users</h1>
-                    <div className="flex space-x-2">
+                    <div
+                        className="flex space-x-2 sticky top-0 right-0 z-10  p-2"
+                    >
                         <button className="px-3 py-1 bg-primary-light rounded-md hover:bg-primary-dark hover:text-white text-sm">
                             Sort
                         </button>
