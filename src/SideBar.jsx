@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [activeItem, setActiveItem] = useState('Dashboard'); // Tracks the active item
+
+    const menuItems = ['Dashboard', 'Users', 'Settings'];
 
     return (
         <div
@@ -17,15 +20,17 @@ const Sidebar = () => {
             </button>
 
             {/* Navigation Links */}
-            <nav clbassName="flex flex-col mt-4 space-y-2">
-                {['Dashboard', 'Add Items', 'Settings'].map((item) => (
+            <nav className="flex flex-col mt-4 space-y-2">
+                {menuItems.map((item) => (
                     <a
                         href="#"
                         key={item}
-                        className={`flex items-center p-2 text-sm hover:bg-primary-dark-light ${isCollapsed ? 'justify-center' : 'pl-6'
-                            }`}
+                        onClick={() => setActiveItem(item)} // Update active item on click
+                        className={`flex items-center p-2 text-sm cursor-pointer ${isCollapsed ? 'justify-center' : 'pl-6'}
+                            ${activeItem === item ? 'bg-primary-light text-black font-bold' : 'hover:bg-primary-dark-light'}
+                        `}
                     >
-                        {/* Same Icon */}
+                        {/* Icon */}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
