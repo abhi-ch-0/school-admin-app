@@ -1,40 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Users = () => {
     const [activeTab, setActiveTab] = useState("Students");
+    const [currentData, setCurrentData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const data = [
-        { name: "Ken Khoi", id: "SC400122", class: "Science 4", age: 17, gender: "Male", email: "KKhoi@gmail.com" },
-        { name: "Zach Sweger", id: "SC400123", class: "Science 4", age: 18, gender: "Male", email: "ZSweger@gmail.com" },
-        { name: "Brooklyn Simmons", id: "SC400122", class: "Science 4", age: 18, gender: "Female", email: "BrookS@gmail.com" },
-        { name: "Savannah Nguyen", id: "SC400121", class: "Science 4", age: 19, gender: "Female", email: "Savangu@gmail.com" },
-        { name: "Robert Fox", id: "SC400120", class: "Science 4", age: 17, gender: "Male", email: "RobertF@gmail.com" },
-        { name: "Jane Cooper", id: "SC300112", class: "Science 3", age: 18, gender: "Female", email: "JaneCoo@gmail.com" },
-        { name: "Wade Warren", id: "SC300111", class: "Science 3", age: 16, gender: "Female", email: "WadeW@gmail.com" },
-        { name: "Jacob Jones", id: "SC200105", class: "Science 2", age: 15, gender: "Male", email: "JacobJ@gmail.com" },
-        { name: "Jerome Bell", id: "SC100100", class: "Science 1", age: 14, gender: "Male", email: "JeromeB@gmail.com" },
-        { name: "Jenny Wilson", id: "SO300141", class: "Social 3", age: 18, gender: "Female", email: "JennyW@gmail.com" },
-    ];
+    const data = {
+        Students: [
+            { name: "Ken Khoi", id: "SC400122", class: "Science 4", age: 17, gender: "Male", email: "KKhoi@gmail.com", profileImage: "https://i.pravatar.cc/40?u=student1" },
+            { name: "Zach Sweger", id: "SC400123", class: "Science 4", age: 18, gender: "Male", email: "ZSweger@gmail.com", profileImage: "https://i.pravatar.cc/40?u=student2" },
+            { name: "Brooklyn Simmons", id: "SC400124", class: "Science 4", age: 18, gender: "Female", email: "BrookS@gmail.com", profileImage: "https://i.pravatar.cc/40?u=student3" },
+            { name: "Savannah Nguyen", id: "SC400125", class: "Science 4", age: 19, gender: "Female", email: "Savangu@gmail.com", profileImage: "https://i.pravatar.cc/40?u=student4" },
+            { name: "Robert Fox", id: "SC400126", class: "Science 4", age: 17, gender: "Male", email: "RobertF@gmail.com", profileImage: "https://i.pravatar.cc/40?u=student5" },
+        ],
+        Teachers: [
+            { name: "Alice Johnson", id: "T1001", subject: "Math", experience: 5, email: "AliceJ@gmail.com", profileImage: "https://i.pravatar.cc/40?u=teacher1" },
+            { name: "Bob Smith", id: "T1002", subject: "Physics", experience: 8, email: "BobS@gmail.com", profileImage: "https://i.pravatar.cc/40?u=teacher2" },
+            { name: "Catherine Holmes", id: "T1003", subject: "Chemistry", experience: 10, email: "CatherineH@gmail.com", profileImage: "https://i.pravatar.cc/40?u=teacher3" },
+            { name: "Daniel Brown", id: "T1004", subject: "Biology", experience: 6, email: "DanielB@gmail.com", profileImage: "https://i.pravatar.cc/40?u=teacher4" },
+            { name: "Emily Green", id: "T1005", subject: "English", experience: 12, email: "EmilyG@gmail.com", profileImage: "https://i.pravatar.cc/40?u=teacher5" },
+        ],
+        Staff: [
+            { name: "Charlie Lee", id: "S2001", department: "Administration", role: "Clerk", email: "CharlieL@gmail.com", profileImage: "https://i.pravatar.cc/40?u=staff1" },
+            { name: "Dana White", id: "S2002", department: "Maintenance", role: "Supervisor", email: "DanaW@gmail.com", profileImage: "https://i.pravatar.cc/40?u=staff2" },
+            { name: "Ethan King", id: "S2003", department: "IT Support", role: "Technician", email: "EthanK@gmail.com", profileImage: "https://i.pravatar.cc/40?u=staff3" },
+            { name: "Fiona Carter", id: "S2004", department: "Accounts", role: "Accountant", email: "FionaC@gmail.com", profileImage: "https://i.pravatar.cc/40?u=staff4" },
+            { name: "George Allen", id: "S2005", department: "HR", role: "HR Manager", email: "GeorgeA@gmail.com", profileImage: "https://i.pravatar.cc/40?u=staff5" },
+        ],
+        Parents: [
+            { name: "Edward Kim", child: "Ken Khoi", contact: "1234567890", email: "EdwardK@gmail.com", profileImage: "https://i.pravatar.cc/40?u=parent1" },
+            { name: "Fiona Green", child: "Zach Sweger", contact: "9876543210", email: "FionaG@gmail.com", profileImage: "https://i.pravatar.cc/40?u=parent2" },
+            { name: "Hannah White", child: "Brooklyn Simmons", contact: "1122334455", email: "HannahW@gmail.com", profileImage: "https://i.pravatar.cc/40?u=parent3" },
+            { name: "Ian Black", child: "Savannah Nguyen", contact: "6677889900", email: "IanB@gmail.com", profileImage: null },
+            { name: "Julia Roberts", child: "Robert Fox", contact: "5544332211", email: "JuliaR@gmail.com", profileImage: null },
+        ],
+    };
+
+    const headers = {
+        Students: ["Name", "ID", "Class", "Age", "Gender", "Email"],
+        Teachers: ["Name", "ID", "Subject", "Experience (Years)", "Email"],
+        Staff: ["Name", "ID", "Department", "Role", "Email"],
+        Parents: ["Name", "Child", "Contact", "Email"],
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        setCurrentData([]);
+        const timeout = setTimeout(() => {
+            setCurrentData(data[activeTab]);
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, [activeTab]);
 
     return (
-        <>
-            {/* Header */}
+        <div className="font-poppins">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-xl font-semibold text-gray-800">Users</h1>
+                <h1 className="text-xl font-semibold text-neutral-dark">Users</h1>
                 <div className="flex space-x-2">
-                    <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 text-sm">Sort</button>
-                    <button className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 text-sm">Filter</button>
+                    <button className="px-3 py-1 bg-primary-light rounded-md hover:bg-primary-dark hover:text-white text-sm">
+                        Sort
+                    </button>
+                    <button className="px-3 py-1 bg-primary-light rounded-md hover:bg-primary-dark hover:text-white text-sm">
+                        Filter
+                    </button>
                 </div>
             </div>
 
-            {/* Tabs */}
-            <div className="flex space-x-3 border-b border-gray-300 mb-4">
-                {["Students", "Teachers", "Staff", "Parents"].map((tab) => (
+            <div className="flex space-x-3 border-b border-neutral-dark mb-4">
+                {Object.keys(data).map((tab) => (
                     <button
                         key={tab}
                         className={`pb-1 px-3 text-sm ${activeTab === tab
-                            ? "text-green-600 border-b-2 border-green-600"
-                            : "text-gray-500"
+                            ? "text-primary-dark border-b-2 border-primary-dark"
+                            : "text-neutral-dark hover:text-primary-light"
                             }`}
                         onClick={() => setActiveTab(tab)}
                     >
@@ -43,45 +83,59 @@ const Users = () => {
                 ))}
             </div>
 
-            {/* Table */}
             <div className="overflow-x-auto">
                 <table className="w-full bg-white shadow-sm rounded-md text-sm">
-                    <thead className="bg-gray-100">
+                    <thead className="bg-neutral-light">
                         <tr>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">Name</th>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">ID</th>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">Class</th>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">Age</th>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">Gender</th>
-                            <th className="px-3 py-1 text-left text-gray-600 font-medium">Email</th>
+                            {headers[activeTab].map((header, index) => (
+                                <th key={index} className="px-3 py-1 text-left text-neutral-dark font-medium">
+                                    {header}
+                                </th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item, index) => (
-                            <tr
-                                key={index}
-                                className={`hover:bg-gray-100 ${index % 2 === 0 ? "bg-green-50" : "bg-white"
-                                    }`}
-                            >
-                                <td className="px-3 py-1 flex items-center space-x-2">
-                                    <img
-                                        src={`https://i.pravatar.cc/40?img=${index + 1}`}
-                                        alt={item.name}
-                                        className="w-8 h-8 rounded-full"
-                                    />
-                                    <span className="text-gray-700">{item.name}</span>
-                                </td>
-                                <td className="px-3 py-1 text-gray-700">{item.id}</td>
-                                <td className="px-3 py-1 text-gray-700">{item.class}</td>
-                                <td className="px-3 py-1 text-gray-700">{item.age}</td>
-                                <td className="px-3 py-1 text-gray-700">{item.gender}</td>
-                                <td className="px-3 py-1 text-gray-700">{item.email}</td>
+                        {loading ? (
+                            <tr>
+                                {headers[activeTab].map((header, colIndex) => (
+                                    <td key={colIndex} className="px-3 py-1 text-neutral">
+                                        Loading...
+                                    </td>
+                                ))}
                             </tr>
-                        ))}
+                        ) : (
+                            currentData.map((item, rowIndex) => (
+                                <tr key={rowIndex} className={`hover:bg-secondary-light`}>
+                                    {headers[activeTab].map((header, colIndex) => {
+                                        const key = header.toLowerCase().replace(/\s/g, '');
+                                        return (
+                                            <td key={colIndex} className="px-3 py-1 text-neutral-dark">
+                                                {key === "name" ? (
+                                                    <div className="flex items-center space-x-2">
+                                                        {item.profileImage ? (
+                                                            <img
+                                                                src={item.profileImage}
+                                                                alt={item.name}
+                                                                className="w-8 h-8 rounded-full"
+                                                            />
+                                                        ) : (
+                                                            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+                                                        )}
+                                                        <span>{item.name}</span>
+                                                    </div>
+                                                ) : (
+                                                    item[key] || 'N/A'
+                                                )}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     );
 };
 
