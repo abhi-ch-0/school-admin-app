@@ -1,5 +1,6 @@
 import Topbar from "./TopBar";
 import Sidebar from "./SideBar";
+import Users from "./Users";
 
 function App() {
     return (
@@ -14,10 +15,7 @@ function App() {
 
                 {/* Main Content */}
                 <div className="flex-grow p-4 overflow-auto">
-                    <h1 className="text-2xl font-bold">Main Content</h1>
-                    <p className="text-gray-700">
-                        This is the main content area. The sidebar can collapse or expand.
-                    </p>
+                    <Users />
                 </div>
             </div>
         </div>
