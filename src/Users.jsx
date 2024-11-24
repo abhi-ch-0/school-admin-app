@@ -88,7 +88,10 @@ const Users = () => {
                     <thead className="bg-neutral-light">
                         <tr>
                             {headers[activeTab].map((header, index) => (
-                                <th key={index} className="px-3 py-1 text-left text-neutral-dark font-medium">
+                                <th
+                                    key={index}
+                                    className="px-3 py-2 text-left text-neutral-dark font-medium whitespace-nowrap"
+                                >
                                     {header}
                                 </th>
                             ))}
@@ -98,18 +101,28 @@ const Users = () => {
                         {loading ? (
                             <tr>
                                 {headers[activeTab].map((header, colIndex) => (
-                                    <td key={colIndex} className="px-3 py-1 text-neutral">
+                                    <td
+                                        key={colIndex}
+                                        className="px-3 py-2 text-neutral text-center"
+                                    >
                                         Loading...
                                     </td>
                                 ))}
                             </tr>
                         ) : (
                             currentData.map((item, rowIndex) => (
-                                <tr key={rowIndex} className={`hover:bg-secondary-light`}>
+                                <tr
+                                    key={rowIndex}
+                                    className="hover:bg-secondary-light even:bg-neutral-light"
+                                >
                                     {headers[activeTab].map((header, colIndex) => {
-                                        const key = header.toLowerCase().replace(/\s/g, '');
+                                        const key = header.toLowerCase().replace(/\s/g, "");
                                         return (
-                                            <td key={colIndex} className="px-3 py-1 text-neutral-dark">
+                                            <td
+                                                key={colIndex}
+                                                className="px-3 py-2 text-neutral-dark whitespace-nowrap overflow-hidden text-ellipsis"
+                                                style={{ maxWidth: colIndex === 0 ? "150px" : "auto" }} // Limit column width for "Name"
+                                            >
                                                 {key === "name" ? (
                                                     <div className="flex items-center space-x-2">
                                                         {item.profileImage ? (
@@ -121,10 +134,12 @@ const Users = () => {
                                                         ) : (
                                                             <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
                                                         )}
-                                                        <span>{item.name}</span>
+                                                        <span className="truncate">
+                                                            {item.name}
+                                                        </span>
                                                     </div>
                                                 ) : (
-                                                    item[key] || 'N/A'
+                                                    item[key] || "N/A"
                                                 )}
                                             </td>
                                         );
