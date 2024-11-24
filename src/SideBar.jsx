@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [activeItem, setActiveItem] = useState('Dashboard'); // Tracks the active item
 
     const menuItems = ['Dashboard', 'Users', 'Settings'];
+
+    // Handle window resize
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsCollapsed(true);
+            } else {
+                setIsCollapsed(false);
+            }
+        };
+
+        // Initial check
+        handleResize();
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <div
