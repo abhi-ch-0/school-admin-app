@@ -1,23 +1,20 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-const Topbar = () => {
+const TopBar = () => {
     return (
-        <nav className="px-2 py-4">
-            <div className="container mx-auto flex items-center justify-between">
-                {/* Left Side: Logo */}
-                <div className="text-primary-light text-base font-bold">School</div>
-
-                {/* Center: Search Bar */}
-                <div className="px-2 w-full max-w-lg">
-                    <SearchBar placeholder="Search for teachers, students, staff, parents..." />
-                </div>
-
-                {/* Right Side */}
-                <div className="text-secondary text-xs"></div>
+        <nav className="px-2 py-4 flex items-center justify-between">
+            <div className="text-primary-light font-bold">
+                School
             </div>
+
+            <div className="px-2 w-full max-w-lg">
+                <SearchBar placeholder="Search for teachers, students, staff, parents..." />
+            </div>
+
+            <div></div>
         </nav>
     );
 };
 
-export default Topbar;
+export default TopBar;

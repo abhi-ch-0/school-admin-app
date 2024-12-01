@@ -1,24 +1,18 @@
-import Topbar from "./TopBar";
+import TopBar from "./TopBar";
 import Sidebar from "./SideBar";
-import Users from "./Users";
+import MainContent from "./MainContent";
 
 function App() {
     return (
-        <div className="flex flex-col h-screen">
-            {/* Topbar */}
-            <Topbar />
+        <>
+            <TopBar />
 
-            {/* Main Content */}
-            <div className="flex flex-grow overflow-hidden">
-                {/* Left Sidebar */}
+            <div className="flex">
                 <Sidebar />
 
-                {/* Main Content */}
-                <div className="flex-grow p-4 overflow-auto">
-                    <Users />
-                </div>
+                <MainContent />
             </div>
-        </div>
+        </>
     );
 }
 
