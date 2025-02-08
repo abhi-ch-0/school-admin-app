@@ -1,11 +1,11 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-const TopBar = () => {
+const TopBar = ({ schoolName }) => {
     return (
         <nav className="px-2 py-4 flex items-center justify-between">
             <div className="text-primary-light font-bold">
-                School
+                {schoolName}
             </div>
 
             <div className="px-2 w-full max-w-lg">

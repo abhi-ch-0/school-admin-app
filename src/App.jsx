@@ -5,7 +5,7 @@ import MainContent from "./MainContent";
 function App() {
     return (
         <>
-            <TopBar />
+            <TopBar schoolName="School" />
 
             <div className="flex">
                 <Sidebar />
